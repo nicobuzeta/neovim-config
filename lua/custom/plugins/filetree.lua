@@ -8,6 +8,13 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
+    {
+      's1n7ax/nvim-window-picker',
+      tag = 'v1.*',
+      config = function()
+          require'window-picker'.setup()
+      end,
+    }
   },
   config = function ()
     require('neo-tree').setup({
