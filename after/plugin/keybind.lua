@@ -2,6 +2,31 @@ local wk = require("which-key")
 
 local telescope_builin = require('telescope.builtin')
 
+local Terminal  = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new({
+  cmd = "lazygit",
+  dir = "git_dir",
+  direction = "float",
+  float_opts = {
+    border = "double",
+  },
+  -- function to run on opening the terminal
+  on_open = function(term)
+    vim.cmd("startinsert!")
+    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+  end,
+  -- function to run on closing the terminal
+  on_close = function(term)
+    vim.cmd("startinsert!")
+  end,
+})
+
+function _lazy_git_toggle()
+  lazygit:toggle()
+end
+
+
+
 wk.register({
   -- Neotree binds
   e = {"<cmd>Neotree action=focus<cr>", "Focus Neotree"},
@@ -59,6 +84,7 @@ wk.register({
     name = "Quit",
     q = {"<cmd>quitall<cr>", "Quit All No Save"},
   },
+  l = {"<cmd>lua _lazy_git_toggle()<cr>", "Lazygit"},
 }, { prefix = "<leader>" })
 
 
