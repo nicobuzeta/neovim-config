@@ -8,7 +8,7 @@ wk.register({
   ['0'] = {"<cmd>Neotree action=focus<cr>", "Focus Neotree"},
   E = {"<cmd>Neotree action=focus toggle<cr>", "Open Neotree"},
   -- Previous Buffers
-  ["<tab>"] = {"<cmd>bprevious<cr>", "Previous buffer"},
+  ["<tab>"] = {"<cmd>b#<cr>", "Previous buffer"},
   -- Telescope Buffers
   ["<space>"] = {telescope_builin.buffers, "Find Open Buffers"},
   -- Trouble binds

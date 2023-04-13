@@ -8,8 +8,8 @@ return {
         enabled = false,
       },
       suggestion = {
-        enabled = false,
         auto_trigger = true,
+        enabled = false,
         keymap = {
           accept = "<C-Tab>",
         },
