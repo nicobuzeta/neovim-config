@@ -357,16 +357,18 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 -- Test
-local lsp = require('lsp-zero').preset({})
-
-lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
-end)
-
--- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-
-lsp.setup()
+-- local lsp = require('lsp-zero').preset("recommended")
+--
+-- lsp.on_attach(function(client, bufnr)
+--   lsp.default_keymaps({buffer = bufnr})
+-- end)
+--
+-- lsp.ensure_installed({
+--   "lua_ls", "tsserver",
+-- })
+--
+-- lsp.setup()
+--
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -443,6 +445,18 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
+require("mason-null-ls").setup({
+    ensure_installed = {
+      "eslint_d"
+    },
+    automatic_installation = false,
+    handlers = {},
+})
+require("null-ls").setup({
+    sources = {
+        -- Anything not supported by mason.
+    }
+})
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
@@ -465,6 +479,8 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
 luasnip.config.setup {}
+
+local lspkind = require('lspkind')
 
 cmp.setup {
   snippet = {
@@ -502,8 +518,39 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'copilot' },
   },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      symbol_map = { Copilot = "" },
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function (entry, vim_item)
+        return vim_item
+      end
+    })
+  },
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+
+      -- Below is the default comparitor list and order for nvim-cmp
+      cmp.config.compare.offset,
+      -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+      cmp.config.compare.exact,
+      require("copilot_cmp.comparators").prioritize,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  }
 }
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
