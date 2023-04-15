@@ -9,7 +9,7 @@ return {
       },
       suggestion = {
         auto_trigger = true,
-        enabled = false,
+        enabled = true,
         keymap = {
           accept = "<C-Tab>",
         },

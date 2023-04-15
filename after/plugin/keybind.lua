@@ -73,10 +73,10 @@ wk.register({
   -- Window binds
   w = {
     name = "Windows",
-    h = {"<cmd>wincmd h<cr>", "Left Window"},
+    h = {"<c-w><h>", "Left Window"},
     j = {"<cmd>wincmd j<cr>", "Down Window"},
     k = {"<cmd>wincmd k<cr>", "Up Window"},
-    l = {"<cmd>wincmd l<cr>", "Right Window"},
+    l = {"<c-w><l>", "Right Window"},
     ["<tab>"] = {"<c-w><c-p>", "Previous Window"},
   },
   -- Quit
@@ -90,3 +90,11 @@ wk.register({
 
 -- Bind control s to save file in normal mode (command mode)
 vim.api.nvim_set_keymap("n", "<C-s>", "<cmd>write<cr>", {noremap = true, silent = true})
+
+-- Move lines up and down
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- Move half page up and down while mantaining cursor middle of page
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
