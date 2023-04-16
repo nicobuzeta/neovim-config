@@ -35,10 +35,9 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
-
--- Set <space> as the leader key
+-- NOTE: Set <space> as the leader key
 -- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+-- NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -542,7 +541,7 @@ cmp.setup {
     -- { name = 'copilot' },
   },
   formatting = {
-    -- insert_text = require('copilot_cmp.format').remove_exiting,
+  --   -- insert_text = require('copilot_cmp.format').remove_exiting,
     format = lspkind.cmp_format({
       mode = 'symbol_text', -- show only symbol annotations
       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)

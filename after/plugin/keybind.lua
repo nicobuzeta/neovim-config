@@ -43,6 +43,7 @@ wk.register({
     d = {"<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics"},
     w = {"<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace Diagnostics"},
     -- t = {"<cmd>TroubleToggle lsp_references<cr>", "Workspace Diagnostics"},
+    t = {"<cmd>TodoTrouble<cr>", "Project Todos"},
   },
   -- Telescope binds
   f = {
@@ -52,6 +53,9 @@ wk.register({
     o = {telescope_builin.oldfiles, "Find Recent Files"},
     b = {telescope_builin.buffers, "Find Open Buffers"},
     d = {telescope_builin.diagnostics, "Diagnostics"},
+    g = {telescope_builin.live_grep, "Search"},
+    G = {telescope_builin.grep_string, "Search Current String"},
+    t = {"<cmd>TodoTelescope<cr>", "Project Todos"},
   },
   -- Tab binds
   t = {
