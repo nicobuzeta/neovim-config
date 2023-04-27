@@ -89,6 +89,18 @@ wk.register({
     q = {"<cmd>quitall<cr>", "Quit All No Save"},
   },
   l = {"<cmd>lua _lazy_git_toggle()<cr>", "Lazygit"},
+  d = {
+    name = "Debug",
+    c = {"<cmd>lua require'dap'.continue()<cr>", "Continue"},
+    C = {"<cmd>lua require'dap'.terminate()<cr>", "Disconnect"},
+    b = {"<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint"},
+    B = {"<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", "Set Breakpoint"},
+    s = {"<cmd>lua require'dap'.step_into()<cr>", "Step Into"},
+    o = {"<cmd>lua require'dap'.step_over()<cr>", "Step Over"},
+    O = {"<cmd>lua require'dap'.step_out()<cr>", "Step Out"},
+    r = {"<cmd>lua require'dap'.repl.open()<cr>", "Open REPL"},
+    u = {"<cmd>lua require'dapui'.toggle()<cr>", "Toggle UI"},
+  }
 }, { prefix = "<leader>" })
 
 
