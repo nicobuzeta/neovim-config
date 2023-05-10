@@ -444,11 +444,53 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
+require('dap').set_log_level('TRACE')
+
 require("mason-nvim-dap").setup({
   ensure_installed = {
   },
   automatic_installation = false,
-  handlers = {},
+  handlers = {
+    function(config)
+      require('mason-nvim-dap').default_setup(config)
+    end,
+    codelldb = function(config)
+      config.configurations = {
+        {
+          type = "codelldb",
+          request = "launch",
+          name = "Launch",
+          program = function()
+              return vim.fn.inputdialog("Path to executable: ", vim.fn.getcwd() .. "/")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+          args = {},
+          runInTerminal = false,
+        },
+        {
+          name = "Replay",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+              return vim.fn.inputdialog("Path to executable: ", vim.fn.getcwd() .. "/")
+          end,
+          stopOnEntry = true,
+          customLaunchSetupCommands = {
+              {
+                  name = "gdb-remote",
+                  args = {"127.0.0.1:3333"}
+              },
+              {
+                  name = "continue"
+              },
+          },
+          reverseDebugging = true,
+       }
+      }
+      require('mason-nvim-dap').default_setup(config)
+    end,
+  },
 })
 
 require("dapui").setup({})
