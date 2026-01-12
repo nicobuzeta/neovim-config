@@ -32,8 +32,17 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'isort', 'black' },
         javascript = { 'prettier' },
+        python = function(bufnr)
+          if
+            require('conform').get_formatter_info('ruff_format', bufnr).available
+            and require('conform').get_formatter_info('ruff_organize_imports', bufnr).available
+          then
+            return { 'ruff_imports', 'ruff_format' }
+          else
+            return { 'isort', 'black' }
+          end
+        end,
         javascriptreact = { 'prettier' },
         typescript = { 'prettier' },
         typescriptreact = { 'prettier' },
